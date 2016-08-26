@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mouse Script</title>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+
+	<div id="box-1" style="width: 500px; height: 400px; margin: 64px; padding: 32px; background-color: #eee; border: 1px solid #ccc; box-shadow: 2px 2px 7px rgba(0,0,0,0.1);">
+		<h1>an element</h1>
+	</div>
+
+
+	<div id="box-2" style="width: 500px; height: 400px; margin: 64px; padding: 32px; background-color: #eee; border: 1px solid #ccc; margin-left: 300px; margin-top: -240px; box-shadow: 2px 2px 7px rgba(0,0,0,0.1);">
+		<h1>another element</h1>
+	</div>
+
+
+	<!-- rm: relative mouse -->
+	<div class="rm-controls">
+		<div class="rm-controls__title">
+			Relative Mouse by <a href="http://www.xrlabs.de">xrlabs</a>
+		</div>
+		<div class="rm-controls__content">
+			<div class="rmc__active-element">Active Element: <i>None</i></div>
+			<button class="rmc__btn-picker">Pick an Element</button>
+		</div>
+	</div>
+
+
+
+	<style>
+		.rm-controls {
+			position: fixed;
+			display: inline-block;
+
+			border-top-left-radius: 8px;
+
+			bottom: 32px;
+			right: 32px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+			box-shadow: 2px 2px 7px rgba(0,0,0,0.1);
+		}
+		
+
+		.rm-controls__title {
+			padding: 16px;
+		}
+		.rm-controls__title a {
+			color: crimson;
+			text-decoration: none;
+		}
+		.rm-controls__title a:hover {
+			text-decoration: underline;
+		}
+
+		.rm-controls__content {
+			padding: 16px;
+			padding-top: 0;
+		}
+
+		.rm-controls__content .rmc__active-element {
+
+		}
+
+		.rm-controls__content .rmc__btn-picker {
+			padding: 8px 12px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			background: rgba(255,255,255,0);
+		}
+		.rm-controls__content .rmc__btn-picker:hover {
+			background: linear-gradient(rgba(255,255,255,0), rgba(0,0,0,0.1));
+		}
+		.rm-controls__content .rmc__btn-picker:active,
+		.rm-controls__content .rmc__btn-picker:focus {
+			outline: none;
+		}
+		.rm-controls__content .rmc__btn-picker:active {
+			background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+		}
+
+
+		.rm-controls__content .rmc__btn-picker[data-state="picking"] {
+			color: #fff;
+			background-color: #338cff;
+		}
+	</style>
+
+
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+
+		var cursorX;
+		var cursorY;
+
+		document.onmousemove = function(e){
+		    cursorX = e.pageX;
+		    cursorY = e.pageY;
+		    console.log(cursorX + ' a ' + cursorY)
+		}
+
+	})
+	</script>
+
+
+</body>
+</html>
