@@ -22,7 +22,12 @@
 			Relative Mouse by <a href="http://www.xrlabs.de">xrlabs</a>
 		</div>
 		<div class="rm-controls__content">
-			<div class="rmc__active-element" id="rmc__active-element">Active Element:<br/><i class="rmc__ae__node">None</i></div>
+			<div class="rmc__active-element" id="rmc__active-element">Active Element:<br/><i class="rmc__ae__node-active">None</i></div>
+			<!--
+			<hr>
+			<div class="rmc__active-element" id="rmc__active-element">Height: <i class="rmc__ae__node-active-height">None</i></div>
+			<div class="rmc__active-element" id="rmc__active-element">Width: <i class="rmc__ae__node-active-width">None</i></div>
+			-->
 			<button class="rmc__btn-picker" id="rmc__btn-picker">Pick an Element</button>
 		</div>
 	</div>
@@ -122,15 +127,30 @@
 					    var cursorX = e.pageX;
 					    var cursorY = e.pageY;
 
+					    var targetTop = $target.position().top;
+					    var targetLeft = $target.position().left;
+					    var targetRight = targetLeft + $target.width();
+					    var targetBottom = targetTop + $target.height();
+
 					    console.log($target);
 						console.log('Mouse X: ' + cursorX + ' | Mouse Y: ' + cursorY);
 						console.log($target.position().top)
 
 						// - Start the Logic ---------------------------------
-						$('#rmc__active-element .rmc__ae__node')
+						$('#rmc__active-element .rmc__ae__node-active')
 						.html($target.context.nodeName)
 						.append(function() { if ($target.context.id) return ('#' + $target.context.id) })
 						.append(function() { if ($target.context.className) return ('.' + $target.context.className.replace(' ', '.')) })
+
+
+						console.log('targetTop: ' + targetTop);
+						console.log('targetLeft: ' + targetLeft);
+						console.log('targetRight: ' + targetRight);
+						console.log('targetBottom: ' + targetBottom);
+
+						console.log('relative top:' + (targetTop - cursorY));
+						console.log('relative left:' + (targetLeft - cursorX));
+
 					}
 
 
