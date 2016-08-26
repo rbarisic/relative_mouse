@@ -7,11 +7,11 @@
 <body>
 
 	<div id="box-1" style="width: 500px; height: 400px; margin: 64px; padding: 32px; background-color: #eee; border: 1px solid #ccc; box-shadow: 2px 2px 7px rgba(0,0,0,0.1);">
-		<h1>an element</h1>
+		<h1 class="lorem-class">an element</h1>
 	</div>
 
 
-	<div id="box-2" style="width: 500px; height: 400px; margin: 64px; padding: 32px; background-color: #eee; border: 1px solid #ccc; margin-left: 300px; margin-top: -240px; box-shadow: 2px 2px 7px rgba(0,0,0,0.1);">
+	<div id="box-2" class="demo-class box-class lorem-class" style="width: 500px; height: 400px; margin: 64px; padding: 32px; background-color: #eee; border: 1px solid #ccc; margin-left: 300px; margin-top: -240px; box-shadow: 2px 2px 7px rgba(0,0,0,0.1);">
 		<h1>another element</h1>
 	</div>
 
@@ -22,8 +22,8 @@
 			Relative Mouse by <a href="http://www.xrlabs.de">xrlabs</a>
 		</div>
 		<div class="rm-controls__content">
-			<div class="rmc__active-element">Active Element: <i>None</i></div>
-			<button class="rmc__btn-picker">Pick an Element</button>
+			<div class="rmc__active-element" id="rmc__active-element">Active Element:<br/><i class="rmc__ae__node">None</i></div>
+			<button class="rmc__btn-picker" id="rmc__btn-picker">Pick an Element</button>
 		</div>
 	</div>
 
@@ -37,7 +37,7 @@
 			border-top-left-radius: 8px;
 
 			bottom: 32px;
-			right: 32px;
+			left: 32px;
 			border: 1px solid #ccc;
 			background-color: #fff;
 
@@ -49,6 +49,8 @@
 
 		.rm-controls__title {
 			padding: 16px;
+			background-color: #eee;
+			font-size: 14px;
 		}
 		.rm-controls__title a {
 			color: crimson;
@@ -60,18 +62,23 @@
 
 		.rm-controls__content {
 			padding: 16px;
-			padding-top: 0;
 		}
 
 		.rm-controls__content .rmc__active-element {
-
+			font-size: 14px;
+			color: #999;
+			font-weight: 300;
 		}
 
 		.rm-controls__content .rmc__btn-picker {
+			margin-top: 16px;
+
 			padding: 8px 12px;
 			border: 1px solid #ccc;
 			border-radius: 4px;
 			background: rgba(255,255,255,0);
+
+			font-size: 14px;
 		}
 		.rm-controls__content .rmc__btn-picker:hover {
 			background: linear-gradient(rgba(255,255,255,0), rgba(0,0,0,0.1));
@@ -89,6 +96,13 @@
 			color: #fff;
 			background-color: #338cff;
 		}
+
+
+		@media screen and (min-width: 640px) {
+			.rm-controls__content .rmc__active-element {
+				max-width: 300px;
+			}
+		}
 	</style>
 
 
@@ -96,14 +110,37 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 
-		var cursorX;
-		var cursorY;
+		var $btnPicker = $('#rmc__btn-picker');
 
-		document.onmousemove = function(e){
-		    cursorX = e.pageX;
-		    cursorY = e.pageY;
-		    console.log(cursorX + ' a ' + cursorY)
-		}
+		$('#rmc__btn-picker').on('click', function(e) {
+			e.stopPropagation();
+
+			// window.setTimeout(function() {
+				$(document).one('click', function(ev) {
+					if($btnPicker.attr('data-state') === 'picking') {
+						var $target = $(ev.target);
+					    var cursorX = e.pageX;
+					    var cursorY = e.pageY;
+
+					    console.log($target);
+						console.log('Mouse X: ' + cursorX + ' | Mouse Y: ' + cursorY);
+						console.log($target.position().top)
+
+						// - Start the Logic ---------------------------------
+						$('#rmc__active-element .rmc__ae__node')
+						.html($target.context.nodeName)
+						.append(function() { if ($target.context.id) return ('#' + $target.context.id) })
+						.append(function() { if ($target.context.className) return ('.' + $target.context.className.replace(' ', '.')) })
+					}
+
+
+					$btnPicker.attr('data-state', null);
+				});
+
+				$btnPicker.attr('data-state', 'picking');
+			// }, 0);
+		});
+
 
 	})
 	</script>
